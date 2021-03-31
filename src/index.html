@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Gradient</title>
+</head>
+<body style="margin: 0px; background-color: #000;">
+  <noscript>
+    <strong>We're sorry but the app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+
+  <div id="gradient"></div>
+
+<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+
+<script type="text/javascript" src="<%= htmlWebpackPlugin.files.js[0] %>"></script>
+
+<script type="text/javascript">
+const WORKER_FILE = './gradient.worker.js?<%= __webpack_hash__ %>';
+
+Gradient.app.init({
+  // width: 100,
+  // height: 100,
+  worker_file_path: WORKER_FILE,
+}); 
+
+const worker = new SharedWorker(WORKER_FILE);
+
+const resize = () => {
+  worker.port.postMessage({
+    action: 'resize',
+    payload: {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    },
+  });
+};
+
+window.addEventListener('resize', resize, true);
+
+window.setTimeout(resize, 400);
+</script>
+
+</body>
+</html>

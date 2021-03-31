@@ -1,0 +1,69 @@
+{
+  "name": "react-widget-setup-2021",
+  "version": "0.1.0",
+  "private": false,
+  "description": "A boilerplate for a React widget (UMD library).",
+  "main": "dist/memo.app.js",
+  "scripts": {
+    "prettier": "prettier -w \"*.*\" \"**/*.(js|jsx)\"",
+    "build:dev": "webpack",
+    "build": "webpack --optimization-minimize",
+    "serve": "http-server dist -a localhost -p 8080",
+    "start": "$npm_execpath run build:dev && $npm_execpath run serve"
+  },
+  "repository": "https://github.com/minagawah/react-widget-setup-2021.git",
+  "keywords": [
+    "React",
+    "widget",
+    "UMD Library"
+  ],
+  "author": "Hiroki Minagawa <minagawa@tokyo800.jp>",
+  "license": "(Unlicense OR MIT)",
+  "bugs": {
+    "url": "https://github.com/minagawah/react-widget-setup-2021/issues"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.1.5",
+    "ramda": "^0.27.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.14",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/runtime-corejs3": "^7.13.10",
+    "@emotion/babel-plugin-jsx-pragmatic": "^0.1.5",
+    "autoprefixer": "^10.2.5",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-macros": "^3.0.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^8.1.0",
+    "core-js": "3",
+    "css-loader": "^5.2.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.1",
+    "http-server": "^0.12.3",
+    "license-webpack-plugin": "^2.3.16",
+    "postcss-loader": "^5.2.0",
+    "prettier": "^2.2.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.6.0"
+  }
+}
