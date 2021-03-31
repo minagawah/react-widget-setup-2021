@@ -31,7 +31,7 @@ A boilerplate for creating a React widget (UMD library).
 
 ## 1. About
 
-#### Embedded React Widget
+### Embedded React Widget
 
 This is a recap of
 [the previous version](https://github.com/minagawah/react-widget-airport)
@@ -40,21 +40,14 @@ but made it simpler.
 This is an attempt to show how you can bundle your React app into a widget (UMD library).  
 Instead of being _"installed"_, this app is to be _"embedded"_ in other apps.  
 (or, you can totally call it from another React apps.
-_[See Example](#c-calling-from-other-react-apps)_)
+_[See Example](#b-calling-from-other-react-apps)_)
 
 It exposes the widget globally (in our case `Gradient`).  
 So, this is how embedding is done:
 
 ```html
-<script
-  crossorigin
-  src="https://unpkg.com/react@17/umd/react.production.min.js"
-></script>
-<script
-  crossorigin
-  src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
-></script>
-
+<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
 <script type="text/javascript" src="./gradient.app.js"></script>
 
 <script type="text/javascript">
@@ -62,8 +55,8 @@ So, this is how embedding is done:
 </script>
 ```
 
-Notice this app depends on external `react` and `react-dom`.  
-Although it is not strictly necessary,
+Notice this app depends on external `React` and `ReactDOM`.  
+Also, while it is not necessary,
 it is better that we define `peerDependencies` in `package.json`:
 
 `package.json`
@@ -75,7 +68,7 @@ it is better that we define `peerDependencies` in `package.json`:
   }
 ```
 
-#### SharedWorker
+### SharedWorker
 
 As you can see, it outputs 2 bundle files (you can output 1).
 For this app, one of the files is for
@@ -95,14 +88,12 @@ worker.port.postMessage({
 });
 ```
 
-&nbsp;
-
-### # Issues
+### Issues
 
 Yeah. I have some issues. We all fail, right?
 
-- `webpack-dev-server` fails ([see "5-2. Issues: webpack-dev-server"](#5-2-issues-webpack-dev-server))
-- `twin.macro` (Tailwind macro) fails at runtime ([see notes](#5-3-issues-tailwind)).
+- `webpack-dev-server` fails (see ["5-2. Issues: webpack-dev-server"](#5-1-issues-webpack-dev-server))
+- `twin.macro` (Tailwind macro) fails at runtime (see ["5-2. Issues: Tailwind"](#5-2-issues-tailwind))
 
 &nbsp;
 
@@ -111,7 +102,7 @@ Yeah. I have some issues. We all fail, right?
 ### 2-1. UMD Library
 
 Building an UMD library is relatively easy.  
-It's just that we frequently bump into problems when working with `babel`...
+It's just that we often bump into problems when working with `babel`...
 
 `webpack.base.js`
 
@@ -204,7 +195,7 @@ but for this time, this is for a testing purpose.
 
     <script type="text/javascript">
       Gradient.app.init({
-        WHATEVER_PARAMS_YOU_WANT,
+        WHATEVER_PARAMS_YOU_WANT_TO_PASS,
       });
     </script>
   </body>
@@ -230,13 +221,16 @@ I use `html-webpack-plugin` only because
 I wanted to append a _"hash"_ to the resources
 so that I don't have to worry about browser cache when developing.
 
+&nbsp;
+
 ### 2-2. APIPlugin - Using Webpack Hash
 
-Alright. This has nothing to do with UMD library.
-This is about sharing _"hash"_ generated between two files.
+Alright. This is something that has nothing to do with UMD library,
+but it is about sharing the _"hash"_ generated between two files.
 I told you in the previous that I use _"hash"_.
-For the same _"hash"_ that is appended to `gradient.app.js`,
-I want the same for `gradient.worker.js`.
+For the same _"hash"_ which is appended to `gradient.app.js`,
+I want the same appended for `gradient.worker.js` as well.
+
 Instead of having this:
 
 ```js
@@ -268,7 +262,7 @@ module.exports = {
 };
 ```
 
-and it allows you to use the hash:
+and it allows you to use the exposed hash like this:
 
 ```js
 const worker = new SharedWorker(`./my_worker.js?{__webpack_hash__}`);
@@ -290,14 +284,8 @@ So, the app starts when it renders React app into a designated DOM:
 ```html
 <div id="gradient"></div>
 
-<script
-  crossorigin
-  src="https://unpkg.com/react@17/umd/react.production.min.js"
-></script>
-<script
-  crossorigin
-  src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
-></script>
+<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
 
 <script type="text/javascript" src="./gradient.app.js"></script>
 ```
@@ -564,9 +552,9 @@ This is no longer the case. Verify if you need this module and configure a polyf
 This is because Webpack 5 no longer supports automatic polyfill for Node.js modules,
 and you have to manually resolve the modules in use (one by one).
 
-Here is how you polyfill by yourself, but remember, it still fails at runtime...
-If anyone figured out a solution for using `twin.macro` in UMD library,
-please, let me know!
+Bellow is how I can polyfill these Node.js modules,
+but remember, **_it still fails at runtime..._**  
+If anyone knows how to use  `twin.macro` in UMD library, let me know!
 
 ```
 yarn add --dev util path-browserify url os-browserify process imports-loader
